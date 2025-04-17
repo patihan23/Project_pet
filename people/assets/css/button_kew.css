@@ -1,0 +1,36 @@
+/* CSS for the button with background image */
+.btn-with-bg {
+    position: relative;
+    overflow: hidden;
+    color: #fff; /* Text color */
+    border: none; /* Remove default border */
+    padding: 10px 20px; /* Adjust padding */
+    font-size: 16px; /* Adjust font size */
+    font-weight: bold; /* Make text bold */
+    cursor: pointer; /* Change cursor on hover */
+    text-align: center; /* Center text */
+}
+
+/* Button with background image */
+.btn-with-bg.btn-danger {
+    background-image: url('../img/button/PDF.png'); /* Replace with your image path */
+    background-size: cover; /* Ensure the image covers the button */
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Prevent repeating the image */
+    opacity: 0.7; /* Adjust opacity for a faded effect */
+}
+
+/* Button with background image */
+.btn-with-bg.btn-success {
+    background-image: url('path/to/your/image.png'); /* Replace with your image path */
+    background-size: cover; /* Ensure the image covers the button */
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Prevent repeating the image */
+    opacity: 0.7; /* Adjust opacity for a faded effect */
+}
+
+/* Ensure text is readable */
+.btn-with-bg span {
+    position: relative;
+    z-index: 1; /* Ensure text is above the background image */
+}
