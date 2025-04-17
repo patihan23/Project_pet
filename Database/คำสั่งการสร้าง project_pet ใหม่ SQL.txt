@@ -1,0 +1,87 @@
+-- สร้าง Database ใหม่
+CREATE DATABASE IF NOT EXISTS `project_pet` CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `project_pet`;
+
+-- สร้าง Table ใหม่ทั้งหมด
+CREATE TABLE `history_v` (
+  `ID_HV` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัสการฉีดวัคซีน',
+  `HV_date` date NOT NULL COMMENT 'วันที่ฉีดวัคซีน',
+`next_Hv_date` date NOT NULL COMMENT 'วันที่ฉีดวัคซีนครั้งถัดไป',
+  `ID_VC` int(11) NOT NULL COMMENT 'รหัสวัคซีน',
+  `ID_OFF` int(11) NOT NULL COMMENT 'รหัสเจ้าหน้าที่',
+  `ID_P` int(11) NOT NULL COMMENT 'รหัสสัตว์เลี้ยง',
+  PRIMARY KEY (`ID_HV`),
+  KEY `ID_VC` (`ID_VC`),
+  KEY `ID_OFF` (`ID_OFF`),
+  KEY `ID_P` (`ID_P`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+CREATE TABLE `official` (
+  `ID_OFF` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัสเจ้าหน้าที่',
+  `User` varchar(40) NOT NULL COMMENT 'ชื่อผู้ใช้',
+  `Pass` varchar(40) NOT NULL COMMENT 'รหัสผ่าน',
+  `Off_name` varchar(40) NOT NULL COMMENT 'ชื่อ-สกุลเจ้าหน้าที่',
+  `num` varchar(10) NOT NULL COMMENT 'เบอร์โทร',
+  `email` varchar(30) NOT NULL COMMENT 'อีเมล์',
+  `pst` varchar(40) NOT NULL COMMENT 'ตำแหน่ง',
+  `user_role` varchar(40) NOT NULL COMMENT 'หน้าที่',
+  `profile_image` varchar(255) DEFAULT NULL COMMENT 'รูปภาพ',
+  PRIMARY KEY (`ID_OFF`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+CREATE TABLE `pet` (
+  `ID_P` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัสสัตว์เลี้ยง',
+  `Type_pet` int(11) NOT NULL COMMENT 'ประเภทสัตว์เลี้ยง{1: สุนัข, 2: แมว}',
+  `Breed` varchar(40) NOT NULL COMMENT 'สายพันธุ์',
+  `Pet_name` varchar(40) NOT NULL COMMENT 'ชื่อสัตว์เลี้ยง',
+  `Gender` int(11) NOT NULL COMMENT 'เพศสัตว์เลี้ยง{1: เพศผู้, 2: เพศเมีย}',
+  `color` varchar(10) NOT NULL COMMENT 'สีสัตว์เลี้ยง',
+  `weight` varchar(10) NOT NULL COMMENT 'น้ำหนัก(กรัม)',
+  `p_old` date NOT NULL COMMENT 'อายุสัตว์เลี้ยง',
+  `ID_PO` int(11) NOT NULL COMMENT 'รหัสเจ้าของ',
+`year_added` year(4) DEFAULT NULL COMMENT 'ปีที่เพิ่ม\r\nปีที่เพิ่ม',
+  PRIMARY KEY (`ID_P`),
+  KEY `ID_PO` (`ID_PO`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+CREATE TABLE `pet_own` (
+  `ID_PO` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัสเจ้าของ',
+  `Po_name` varchar(40) NOT NULL COMMENT 'ชื่อ-สกุลเจ้าของ',
+  `ID` varchar(13) NOT NULL COMMENT 'เบอร์มือถือ',
+  `Hno` varchar(25) NOT NULL COMMENT 'บ้านเลขที่',
+  `Moo` varchar(25) NOT NULL COMMENT 'หมู่ที่',
+  `tb` varchar(25) NOT NULL COMMENT 'ตำบล',
+  PRIMARY KEY (`ID_PO`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+CREATE TABLE `sterilization` (
+  `ID_S` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัสการทำหมัน',
+  `S_date` date NOT NULL COMMENT 'วันที่ทำหมัน',
+  `ID_OFF` int(11) NOT NULL COMMENT 'รหัสเจ้าหน้าที่',
+  `ID_P` int(11) NOT NULL COMMENT 'รหัสสัตว์เลี้ยง',
+  PRIMARY KEY (`ID_S`),
+  KEY `ID_OFF` (`ID_OFF`),
+  KEY `ID_P` (`ID_P`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+CREATE TABLE `vaccine` (
+  `ID_VC` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัสวัคซีน',
+  `V_name` varchar(40) NOT NULL COMMENT 'ชื่อวัคซีน',
+  `V_storage` varchar(40) NOT NULL COMMENT 'การจัดเก็บวัคซีน',
+  `Expiration_date` date NOT NULL COMMENT 'วันที่หมดอายุ',
+  `Dosage` int(10) NOT NULL COMMENT 'จำนวนที่มี',
+  PRIMARY KEY (`ID_VC`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- Constraints for dumped tables
+ALTER TABLE `history_v`
+  ADD CONSTRAINT `history_v_ibfk_1` FOREIGN KEY (`ID_OFF`) REFERENCES `official` (`ID_OFF`),
+  ADD CONSTRAINT `history_v_ibfk_2` FOREIGN KEY (`ID_P`) REFERENCES `pet` (`ID_P`),
+  ADD CONSTRAINT `history_v_ibfk_3` FOREIGN KEY (`ID_VC`) REFERENCES `vaccine` (`ID_VC`);
+
+ALTER TABLE `pet`
+  ADD CONSTRAINT `pet_ibfk_1` FOREIGN KEY (`ID_PO`) REFERENCES `pet_own` (`ID_PO`);
+
+ALTER TABLE `sterilization`
+  ADD CONSTRAINT `sterilization_ibfk_1` FOREIGN KEY (`ID_OFF`) REFERENCES `official` (`ID_OFF`),
+  ADD CONSTRAINT `sterilization_ibfk_2` FOREIGN KEY (`ID_P`) REFERENCES `pet` (`ID_P`);

@@ -1,0 +1,487 @@
+  <?php
+  session_start();
+  include('../config.php');
+  if (!isset($_SESSION['username'])) {
+    header("Location: ../login_official.php");
+    exit;
+  }
+
+  $perPage = 10;
+  $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+  $start = ($page > 1) ? ($page * $perPage) - $perPage : 0;
+  $loggedInUserID = $_SESSION['ID_OFF'];
+  ?>
+
+
+  <!DOCTYPE html>
+  <html lang="en">
+
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>ข้อมูลเจ้าของสัตว์เลี้ยง</title>
+    <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css">
+    <link rel="icon" href="assets/img/logo/logo.png" type="image/x-icon" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Kanit:100,200,300&amp;subset=thai" rel="stylesheet">
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="assets/css/plugins.min.css" />
+    <link rel="stylesheet" href="assets/css/kaiadmin.min.css" />
+
+    <link rel="stylesheet" href="assets/css/color.css" />
+  </head>
+
+  <body>
+    <div class="wrapper">
+      <!-- Sidebar -->
+      <div class="sidebar" data-background-color="dark">
+        <div class="sidebar-logo">
+          <!-- Logo Header -->
+          <div class="logo-header" data-background-color="dark">
+            <a href="index.php" class="logo">
+              <img src="assets/img/logo/logo_pet.png" alt="navbar brand" class="navbar-brand" height="20" />
+            </a>
+            <div class="nav-toggle">
+              <button class="btn btn-toggle toggle-sidebar">
+                <i class="gg-menu-right"></i>
+              </button>
+              <button class="btn btn-toggle sidenav-toggler">
+                <i class="gg-menu-left"></i>
+              </button>
+            </div>
+            <button class="topbar-toggler more">
+              <i class="gg-more-vertical-alt"></i>
+            </button>
+          </div>
+          <!-- End Logo Header -->
+        </div>
+        <div class="sidebar-wrapper scrollbar scrollbar-inner">
+          <div class="sidebar-content">
+            <ul class="nav nav-secondary">
+              <li class="nav-item">
+                <a href="index.php">
+                  <i class="fas fa-home"></i>
+                  <p>หน้าแรก</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a data-bs-toggle="collapse" href="#chart">
+                  <i class="far fa-chart-bar"></i>
+                  <p>ข้อมูลสถิติประจำปี</p>
+                  <span class="caret"></span>
+                </a>
+                <div class="collapse" id="chart">
+                  <ul class="nav nav-collapse">
+                    <li>
+                      <a href="chart_pet.php">
+                        <span class="sub-item">ข้อมูลสถิติจำนวนสัตว์ในระบบประจำปี</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="chart_history_v.php">
+                        <span class="sub-item">ข้อมูลสถิติจำนวนสัตว์ที่ได้รับวัคซีนประจำปี</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+              <li class="nav-item">
+              <a data-bs-toggle="collapse" href="#chart_day">
+                <i class="fas fa-calendar-alt"></i>
+                <p>ข้อมูลประจำวัน</p>
+                <span class="caret"></span>
+              </a>
+              <div class="collapse " id="chart_day">
+                <ul class="nav nav-collapse">
+                  <li class="">
+                    <a href="chart_day_received.php">
+                      <span class="sub-item">ข้อมูลสัตว์ที่ได้รับวัคซีน</span>
+                    </a>
+                  </li>
+                  <li class="">
+                    <a href="chart_day_not_received.php">
+                      <span class="sub-item">ข้อมูลสัตว์ที่ไม่ได้รับวัคซีน</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+              <li class="nav-item">
+                <a data-bs-toggle="collapse" href="#maps">
+                  <i class="fas fa-map-marker-alt"></i>
+                  <p>Maps</p>
+                  <span class="caret"></span>
+                </a>
+                <div class="collapse" id="maps">
+                  <ul class="nav nav-collapse">
+                    <li>
+                      <a href="googlemaps.php">
+                        <span class="sub-item">ตำแหน่งจุดฉีด Google Maps</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="OpenStreetMap.php">
+                        <span class="sub-item">ตำแหน่งจุดฉีด OpenStreetMap</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+              <li class="nav-section">
+                <span class="sidebar-mini-icon">
+                  <i class="fa fa-ellipsis-h"></i>
+                </span>
+                <h4 class="text-section">Pet Menu</h4>
+              </li>
+              <li class="nav-item active">
+                <a href="pet_own.php">
+                  <i class="fas fa-user-alt "></i>
+                  <p>ข้อมูลเจ้าของสัตว์เลี้ยง</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="pet.php">
+                  <i class="fas fa-paw"></i>
+                  <p>ข้อมูลสัตว์เลี้ยง</p>
+                </a>
+              </li>
+              <li class="nav-section">
+                <span class="sidebar-mini-icon">
+                  <i class="fa fa-ellipsis-h"></i>
+                </span>
+                <h4 class="text-section">Vaccine Menu</h4>
+              </li>
+              <li class="nav-item">
+                <a href="vaccine.php">
+                  <i class="fa-solid fa-syringe"></i>
+                  <p>ข้อมูลวัคซีน</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="history_vaccine.php">
+                  <i class="fa-solid fa-book-medical"></i>
+                  <p>ประวัติการฉีดวัคซีน</p>
+                </a>
+              </li>
+              <?php
+
+              // ตรวจสอบว่ามี session 'username' และ 'user_role' หรือไม่
+              if (isset($_SESSION['username']) && isset($_SESSION['user_role'])) {
+                $user_role = $_SESSION['user_role'];
+
+                // ตรวจสอบว่า user_role เป็น admin หรือไม่
+                if ($user_role === 'admin') {
+              ?>
+                  <li class="nav-section">
+                    <span class="sidebar-mini-icon">
+                      <i class="fa fa-ellipsis-h"></i>
+                    </span>
+                    <h4 class="text-section">Admin Menu</h4>
+                  </li>
+                  <li class="nav-item">
+                    <a href="official.php">
+                      <i class="fa-solid fa-user-tie"></i>
+                      <p>ข้อมูลเจ้าหน้าที่</p>
+                    </a>
+                  </li>
+              <?php }
+              } ?>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- End Sidebar -->
+      <style>
+        .pagination {
+          display: flex;
+          justify-content: center;
+          margin: 20px 0;
+        }
+
+        .page-link {
+          background-color: #F8F8FF;
+          /* สีพื้นหลังปุ่ม */
+          color: #000000;
+          /* สีตัวหนังสือ */
+          padding: 10px 15px;
+          margin: 5px;
+          border: 1px solid #007BFF;
+          /* สีเส้นขอบปุ่ม */
+          border-radius: 5px;
+          text-decoration: none;
+        }
+
+        .page-link:hover {
+          background-color: #BEBEBE;
+          /* สีพื้นหลังเมื่อนำเมาส์มาชี้ */
+        }
+      </style>
+      <!-- Include jQuery -->
+      <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+      <!-- Include SweetAlert JS -->
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+      <?php
+      $sql = "SELECT COUNT(*) as pet_own_count FROM pet_own WHERE ID_PO";
+      $result = $conn->query($sql);
+
+      $pet_own_count = 0;
+      if ($result->num_rows > 0) {
+        // Output the count of male dogs
+        while ($row = $result->fetch_assoc()) {
+          $pet_own_count = $row["pet_own_count"];
+        }
+      } else {
+        echo "ไม่มีข้อมูล";
+      }
+      ?>
+
+
+      <div class="main-panel">
+        <div class="main-header">
+          <div class="main-header-logo">
+            <!-- Logo Header -->
+            <div class="logo-header" data-background-color="dark">
+              <a href="index.html" class="logo">
+                <img src="assets/img/logo/logo.png" alt="navbar brand" class="navbar-brand" height="20" />
+              </a>
+              <div class="nav-toggle">
+                <button class="btn btn-toggle toggle-sidebar">
+                  <i class="gg-menu-right"></i>
+                </button>
+                <button class="btn btn-toggle sidenav-toggler">
+                  <i class="gg-menu-left"></i>
+                </button>
+              </div>
+              <button class="topbar-toggler more">
+                <i class="gg-more-vertical-alt"></i>
+              </button>
+            </div>
+            <!-- End Logo Header -->
+          </div>
+          <!-- Navbar Header -->
+          <?php include 'include/navbar.php'; ?>
+          <!-- End Navbar -->
+
+          <?php
+          $selectedYear = isset($_GET['year']) ? $_GET['year'] : '';
+
+          // Adjust the SQL query based on the selected year
+          $countQuery = "SELECT COUNT(*) AS pet_own_count FROM pet_own";
+          if ($selectedYear) {
+            $countQuery .= " WHERE YEAR(date_add) = '$selectedYear'";
+          }
+          $countResult = mysqli_query($conn, $countQuery);
+          $countRow = mysqli_fetch_assoc($countResult);
+          $pet_own_count = $countRow['pet_own_count'];
+          ?>
+          <div class="container">
+            <div class="page-inner">
+              <div class="row">
+                <div class="row">
+                  <div class="col-sm-6 col-md-3 text-center">
+                    <div class="card card-stats card-round">
+                      <!-- <div class="card-body">
+                        <div class="row align-items-center">
+                          <div class="col-icon">
+                            <div class="icon-big text-center icon-primary bubble-shadow-small">
+                              <i class="fa-solid fa-id-card"></i>
+                            </div>
+                          </div>
+                          <div class="col col-stats ms-3 ms-sm-0">
+                            <div class="numbers">
+                              <p class="card-category text-primary">จำนวนเจ้าของสัตว์เลี้ยง</p>
+                              <h4 class="card-title"><?php echo number_format($pet_own_count); ?></h4>
+                            </div>
+                          </div>
+                        </div>
+                      </div> -->
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="container mt-12" style="width:100%;">
+                    <div class="card col-12">
+                      <div class="card-header">
+                        <div class="card-title">จัดการข้อมูลเจ้าของสัตว์เลี้ยง
+                          <div class="text-center">
+                            <button class="btn btn-success btn-round" data-toggle="modal" data-target="#add_pet_own">
+                              <span class="btn-label">
+                                <i class="fa-solid fa-user-plus"></i>
+                              </span>
+                              เพิ่มข้อมูลเจ้าของ
+                            </button>
+                          </div>
+                        </div>
+
+                        <form method="get" action="" id="yearForm">
+                          <label for="year">เลือกปี:</label>
+                          <select name="year" id="year" onchange="document.getElementById('yearForm').submit();">
+                            <option value="">ทั้งหมด</option>
+                            <?php
+                            // Fetch available years from the database
+                            $yearQuery = "SELECT DISTINCT YEAR(date_add) AS year_add FROM pet_own ORDER BY year_add DESC";
+                            $yearResult = mysqli_query($conn, $yearQuery);
+                            while ($yearRow = mysqli_fetch_assoc($yearResult)) {
+                              $year = $yearRow['year_add'];
+                              echo "<option value='$year'" . ($selectedYear == $year ? " selected" : "") . ">$year</option>";
+                            }
+                            ?>
+                          </select>
+                        </form>
+                      </div>
+
+                      <?php include 'model/form_add_pet_own.php'; ?>
+
+                      <div class="card-body">
+                        <div class="table-responsive">
+                          <table id="pet_ownTable" class="table table-hover table-head-bg-black">
+                            <thead>
+                              <tr style="text-align: center;">
+                                <th>ลำดับ</th>
+                                <th>ชื่อเจ้าของสัตว์เลี้ยง</th>
+                                <th>หมายเลขประจำตัวประชาชน</th>
+                                <th>บ้านเลขที่</th>
+                                <th>หมู่</th>
+                                <th>ตำบล</th>
+                                <th>จัดการ</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <?php
+                              $sql = "SELECT *, DATE_FORMAT(date_add, '%e %b %Y') AS formatted_date FROM pet_own";
+                              if ($selectedYear) {
+                                $sql .= " WHERE YEAR(date_add) = '$selectedYear'";
+                              }
+                              $sql .= " ORDER BY ID_PO";
+                              $result = mysqli_query($conn, $sql);
+
+                              $counter = 1; // เริ่มนับลำดับจาก 1 นอกลูป
+
+                              while ($row = mysqli_fetch_assoc($result)) {
+                                $date = $row['formatted_date'];
+                                $months = array(
+                                  'Jan' => 'ม.ค.',
+                                  'Feb' => 'ก.พ.',
+                                  'Mar' => 'มี.ค.',
+                                  'Apr' => 'เม.ย.',
+                                  'May' => 'พ.ค.',
+                                  'Jun' => 'มิ.ย.',
+                                  'Jul' => 'ก.ค.',
+                                  'Aug' => 'ส.ค.',
+                                  'Sep' => 'ก.ย.',
+                                  'Oct' => 'ต.ค.',
+                                  'Nov' => 'พ.ย.',
+                                  'Dec' => 'ธ.ค.'
+                                );
+
+                                foreach ($months as $en => $th) {
+                                  $date = str_replace($en, $th, $date);
+                                }
+
+                                $date_parts = explode(' ', $date);
+                                $year = $date_parts[2] + 543;
+                                $formatted_date = $date_parts[0] . ' ' . $date_parts[1] . ' ' . $year;
+                              ?>
+                                <tr>
+                                  <td><?php echo $counter; ?></td> <!-- แสดงลำดับที่ -->
+                                  <td><?php echo htmlspecialchars($row['Po_name']); ?></td>
+                                  <td><?php echo htmlspecialchars($row['ID']); ?></td>
+                                  <td><?php echo htmlspecialchars($row['Hno']); ?></td>
+                                  <td><?php echo htmlspecialchars($row['Moo']); ?></td>
+                                  <td><?php echo htmlspecialchars($row['tb']); ?></td>
+                                  <td><button type="button" class="btn btn-warning btn-link btn-icon" data-toggle="modal" data-target="#edit_pet_own<?php echo htmlspecialchars($row['ID_PO']); ?>"><span class="fa fa-edit"></span></button>
+                                  <button type="button" class="btn btn-danger btn-link btn-icon" data-toggle="modal" data-target="#delete_pet_own<?php echo htmlspecialchars($row['ID_PO']); ?>"><span class="fa fa-trash"></span></button></td>
+                                </tr>
+                                <?php
+                                $counter++; // เพิ่มลำดับที่ทีละ 1 ในแต่ละรอบของ loop
+                                include('model/form_edit_pet_own.php');
+                                include('model/form_delete_pet_own.php');
+                                ?>
+                              <?php } ?>
+                            </tbody>
+
+                          </table>
+                          <?php include('action/action_insert_pet_own.php') ?>
+                          <?php include('action/action_edit_pet_own.php') ?>
+                          <?php include('action/action_delete_pet_own.php') ?>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <!-- Add CSS -->
+          <style>
+            .table tbody td {
+              text-align: center;
+              white-space: nowrap;
+            }
+          </style>
+          <script>
+            $(document).ready(function() {
+              $('#pet_ownTable').DataTable({
+                "paging": true,
+                "searching": true,
+                "ordering": true,
+                "info": true,
+                "lengthChange": true,
+                "pageLength": 10,
+                "language": {
+                  "search": "ค้นหา:",
+                  "lengthMenu": "แสดง _MENU_ รายการต่อหน้า",
+                  "info": "แสดงหน้า _PAGE_ จาก _PAGES_",
+                  "infoEmpty": "ไม่มีข้อมูล",
+                  "infoFiltered": "(ค้นหาจากทั้งหมด _MAX_ รายการ)",
+                  "paginate": {
+                    "next": "ถัดไป",
+                    "previous": "ก่อนหน้า"
+                  }
+                },
+                initComplete: function() {
+                  // ใช้ DataTable API เพื่อเข้าถึงคอลัมน์ต่างๆ
+                  this.api().columns().every(function() {
+                    var column = this;
+                    var select = $(
+                        '<select class="form-select"><option value=""></option></select>'
+                      )
+                      .appendTo($(column.footer()).empty()) // เพิ่ม select box ที่ท้ายคอลัมน์
+                      .on("change", function() {
+                        var val = $.fn.dataTable.util.escapeRegex($(this).val());
+
+                        column
+                          .search(val ? "^" + val + "$" : "", true, false) // ใช้ regex ในการกรอง
+                          .draw(); // วาดตารางใหม่หลังจากกรอง
+                      });
+
+                    // วนลูปเพื่อเพิ่มตัวเลือกใน select box สำหรับค่าที่ไม่ซ้ำในคอลัมน์นี้
+                    column.data().unique().sort().each(function(d, j) {
+                      select.append(
+                        '<option value="' + d + '">' + d + '</option>'
+                      );
+                    });
+                  });
+                }
+              });
+            });
+          </script>
+
+          <?php include 'include/footer.php'; ?>
+        </div>
+
+        <!-- Custom template | don't include it in your project! -->
+        <?php include('include/Custom_tp.php'); ?>
+        <!-- End Custom template -->
+      </div>
+      <?php include('include/script.php'); ?>
+  </body>
+
+  </html>
+
+  <?php mysqli_close($conn); ?>
