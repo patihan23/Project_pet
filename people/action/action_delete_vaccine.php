@@ -5,7 +5,7 @@ if (isset($_POST['btnDeleteVaccine'])) {
     $ID_VC = mysqli_real_escape_string($conn, $_POST["ID_VC"]);
 
     // ตรวจสอบว่ามีข้อมูลในตาราง Vaccine หรือไม่
-    $sqlcheck = "SELECT ID_VC FROM Vaccine WHERE ID_VC = '$ID_VC'";
+    $sqlcheck = "SELECT ID_VC FROM vaccine WHERE ID_VC = '$ID_VC'";
     $querycheck = mysqli_query($conn, $sqlcheck);
 
     if (mysqli_num_rows($querycheck) > 0) {
@@ -36,7 +36,7 @@ if (isset($_POST['btnDeleteVaccine'])) {
                 ';
             } else {
                 // ไม่มีการอ้างอิง สามารถลบข้อมูลได้
-                $sqld_delete = "DELETE FROM Vaccine WHERE ID_VC = '$ID_VC'";
+                $sqld_delete = "DELETE FROM vaccine WHERE ID_VC = '$ID_VC'";
                 $queryd_delete = mysqli_query($conn, $sqld_delete);
 
                 if ($queryd_delete) {

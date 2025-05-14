@@ -22,15 +22,15 @@
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-light bg-white py-3">
             <div class="container px-5">
-                <a class="navbar-brand" href="index.php"><span class="fw-bolder text-primary">ระบบจัดเก็บข้อมูลการฉีดวัคซีนสำหรับสัตว์</span></a>
+                <a class="navbar-brand" href="index"><span class="fw-bolder text-primary">ระบบจัดเก็บข้อมูลการฉีดวัคซีนสำหรับสัตว์</span></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0 small fw-bolder">
-                        <li class="nav-item"><a class="nav-link" href="index.php">หน้าแรก</a></li>
-                        <li class="nav-item"><a class="nav-link" href="statistics.php">สถิติ</a></li>
-                        <li class="nav-item"><a class="nav-link" href="Personnel.php">บุคคลากร</a></li>
-                        <li class="nav-item"><a class="nav-link" href="Check_pet.php">ตรวจสอบรายชื่อ</a></li>
-                        <li class="nav-item"><a class="nav-link" href="maps.php">แผนที่จุดฉีดวัคซีน</a></li>
+                        <li class="nav-item"><a class="nav-link" href="index">หน้าแรก</a></li>
+                        <li class="nav-item"><a class="nav-link" href="statistics">สถิติ</a></li>
+                        <li class="nav-item"><a class="nav-link" href="Personnel">บุคคลากร</a></li>
+                        <li class="nav-item"><a class="nav-link" href="Check_pet">ตรวจสอบรายชื่อ</a></li>
+                        <li class="nav-item"><a class="nav-link" href="maps">แผนที่จุดฉีดวัคซีน</a></li>
                     </ul>
                 </div>
             </div>

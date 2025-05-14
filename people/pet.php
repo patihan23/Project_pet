@@ -51,6 +51,8 @@ function convertDateToThai($date)
   <link rel="icon" href="assets/img/logo/logo.png" type="image/x-icon" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css?family=Kanit:100,200,300&amp;subset=thai" rel="stylesheet">
+  <!-- jQuery UI CSS -->
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
   <!-- CSS Files -->
   <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
   <link rel="stylesheet" href="assets/css/plugins.min.css" />
@@ -246,6 +248,8 @@ function convertDateToThai($date)
     </style>
     <!-- Include jQuery -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <!-- Include jQuery UI -->
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
     <!-- Include SweetAlert JS -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -538,29 +542,30 @@ function convertDateToThai($date)
                               <td><?php echo $row['color']; ?></td>
                               <td><?php echo $row['weight']; ?> kg</td>
                               <td style="background-color: 
-  <?php 
-    if ($row['status'] == 1) {
-      echo '#d4edda';  // สีเขียวอ่อน (สำหรับยังมีชีวิต)
-    } elseif ($row['status'] == 2) {
-      echo '#f8d7da';  // สีแดงอ่อน (สำหรับเสียชีวิต)
-    } else {
-      echo '#fefefe';  // สีขาว (สำหรับไม่ทราบ)
-    }
-  ?>;">
   <?php
-    if ($row['status'] == 1) {
-      echo 'ยังมีชีวิต';
-    } elseif ($row['status'] == 2) {
-      echo 'เสียชีวิต';
-    } else {
-      echo 'ไม่ทราบ';
-    }
-  ?>
-</td>
+                            if ($row['status'] == 1) {
+                              echo '#d4edda';  // สีเขียวอ่อน (สำหรับยังมีชีวิต)
+                            } elseif ($row['status'] == 2) {
+                              echo '#f8d7da';  // สีแดงอ่อน (สำหรับเสียชีวิต)
+                            } else {
+                              echo '#fefefe';  // สีขาว (สำหรับไม่ทราบ)
+                            }
+  ?>;">
+                                <?php
+                                if ($row['status'] == 1) {
+                                  echo 'ยังมีชีวิต';
+                                } elseif ($row['status'] == 2) {
+                                  echo 'เสียชีวิต';
+                                } else {
+                                  echo 'ไม่ทราบ';
+                                }
+                                ?>
+                              </td>
 
                               <td><?php echo $row['Po_name']; ?></td>
                               <td><button type="button" class="btn btn-warning btn-link btn-icon" data-toggle="modal" data-target="#edit_pet<?php echo $row['ID_P'] ?>"><span class="fa fa-edit"></span></button>
-                              <button type="button" class="btn btn-danger btn-link btn-icon" data-toggle="modal" data-target="#delete_pet<?php echo $row['ID_P']; ?>"><span class="fa fa-trash"></span></button></td>
+                                <button type="button" class="btn btn-danger btn-link btn-icon" data-toggle="modal" data-target="#delete_pet<?php echo $row['ID_P']; ?>"><span class="fa fa-trash"></span></button>
+                              </td>
                             </tr>
                             <?php
                             $counter++; // เพิ่มลำดับที่ทีละ 1 ในแต่ละรอบของ loop
@@ -621,6 +626,36 @@ function convertDateToThai($date)
       <!-- End Custom template -->
     </div>
     <?php include('include/script.php'); ?>
+    
+    <!-- SweetAlert notification script -->
+    <?php if(isset($_SESSION['swal_success'])): ?>
+    <script>
+        Swal.fire({
+            title: 'สำเร็จ!',
+            text: '<?php echo $_SESSION['swal_message']; ?>',
+            icon: 'success',
+            timer: 1500,
+            showConfirmButton: false
+        });
+    </script>
+    <?php 
+        unset($_SESSION['swal_success']);
+        unset($_SESSION['swal_message']);
+    endif; ?>
+    
+    <?php if(isset($_SESSION['swal_error'])): ?>
+    <script>
+        Swal.fire({
+            title: 'เกิดข้อผิดพลาด!',
+            text: '<?php echo $_SESSION['swal_message']; ?>',
+            icon: 'error',
+            showConfirmButton: true
+        });
+    </script>
+    <?php 
+        unset($_SESSION['swal_error']);
+        unset($_SESSION['swal_message']);
+    endif; ?>
 </body>
 
 </html>

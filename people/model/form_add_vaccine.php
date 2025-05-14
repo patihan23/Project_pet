@@ -30,7 +30,7 @@
           </div>
           <div class="form-group">
             <label>จำนวนที่มี:</label>
-            <input type="text" name="Dosage" class="form-control" required="">
+            <input type="number" name="Dosage" class="form-control" required="">
           </div>
       </div>
       <div class="modal-footer">

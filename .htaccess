@@ -1,0 +1,25 @@
+RewriteEngine On
+
+# ถ้าเรียกแบบไม่มี .php และมีไฟล์ .php จริง
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^(.*)$ $1.php [L]
+
+# ทำการ redirect เฉพาะ GET request ที่มี .php
+RewriteCond %{THE_REQUEST} \.php
+RewriteCond %{REQUEST_METHOD} GET
+RewriteRule ^(.*)\.php$ /$1 [R=301,L]
+
+# ป้องกันไม่ให้ redirect เมื่อเป็น POST, PUT, DELETE หรือ AJAX
+RewriteCond %{REQUEST_METHOD} ^(POST|PUT|DELETE)$
+RewriteRule ^(.*)\.php$ $1.php [L]
+
+# ป้องกันการเข้าถึงไฟล์ .htaccess
+<Files .htaccess>
+    Order Allow,Deny
+    Deny from all
+</Files>
+
+# กำหนดค่า PHP
+php_value date.timezone Asia/Bangkok
+php_value display_errors Off

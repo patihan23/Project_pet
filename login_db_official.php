@@ -43,7 +43,7 @@
                             showConfirmButton: false,
                             timer: 1500
                         }).then(() => {
-                            window.location.href = 'people/index.php';
+                            window.location.href = 'people/index';
                         });";
                     } else {
                         echo "Swal.fire({

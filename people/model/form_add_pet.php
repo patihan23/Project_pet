@@ -25,7 +25,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <form name="" method="post" enctype="multipart/form-data">
+        <form name="add_pet_form" id="add_pet_form" method="post" action="" enctype="multipart/form-data">
         <input type="hidden" name="status" value="1">
           <div class="row">
             <div class="col-md-6">

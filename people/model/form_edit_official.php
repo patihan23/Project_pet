@@ -4,14 +4,26 @@
     if (input.value.length > 10) {
       input.value = input.value.slice(0, 10);
     }
+    
+    // กรองให้รับเฉพาะตัวเลขเท่านั้น
+    input.value = input.value.replace(/\D/g, '');
   }
 
-  function validateForm() {
-    var numInput = document.querySelector('input[name="num"]');
+  function validateForm(form) {
+    var numInput = form.querySelector('input[name="num"]');
+    
+    // ตรวจสอบว่าเป็นตัวเลขเท่านั้น
+    if (/\D/.test(numInput.value)) {
+      alert("กรุณากรอกเฉพาะตัวเลขเท่านั้น");
+      return false;
+    }
+    
+    // ตรวจสอบความยาว
     if (numInput.value.length !== 10) {
       alert("กรุณากรอกเบอร์โทรให้ครบ 10 หลัก");
       return false; // ป้องกันการส่งฟอร์ม
     }
+    
     return true; // อนุญาตให้ส่งฟอร์ม
   }
 </script>
@@ -28,7 +40,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form name="editProfileForm<?php echo $row['ID_OFF']; ?>" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+                <form name="editProfileForm<?php echo $row['ID_OFF']; ?>" method="post" enctype="multipart/form-data" onsubmit="return validateForm(this)">
                     <input type="hidden" name="ID_OFF" value="<?php echo $row['ID_OFF']; ?>" class="form-control" required="">
                     <div class="row">
                         <div class="col-md-6">

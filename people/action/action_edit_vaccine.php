@@ -11,7 +11,7 @@ if (isset($_POST['btnEditVaccine'])) {
     $Expiration_date = mysqli_real_escape_string($conn, $_POST['Expiration_date']);
     $Dosage = mysqli_real_escape_string($conn, $_POST['Dosage']);
 
-    $sql_update_vaccine = "UPDATE Vaccine SET 
+    $sql_update_vaccine = "UPDATE vaccine SET 
     V_name = '$V_name',
     V_info = '$V_info',
     V_storage = '$V_storage',

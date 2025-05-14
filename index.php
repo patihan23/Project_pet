@@ -11,8 +11,8 @@
                     <div class="fs-3 fw-light text-muted">ยินดีต้อนรับเข้าสู่</div>
                     <h1 class="display-3 fw-bolder mb-5"><span class="text-gradient d-inline">ตรวจสอบการฉีดวัคซีนสัตว์เลี้ยง</span></h1>
                     <div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xxl-start mb-3">
-                        <a class="btn btn-primary btn-lg px-5 py-3 me-sm-3 fs-6 fw-bolder" href="Check_pet.php">ประวัติการฉีดวัคซีน</a>
-                        <a class="btn btn-outline-dark btn-lg px-5 py-3 fs-6 fw-bolder" href="login_official.php">สำหรับเจ้าหน้าที่</a>
+                        <a class="btn btn-primary btn-lg px-5 py-3 me-sm-3 fs-6 fw-bolder" href="Check_pet">ประวัติการฉีดวัคซีน</a>
+                        <a class="btn btn-outline-dark btn-lg px-5 py-3 fs-6 fw-bolder" href="login_official">สำหรับเจ้าหน้าที่</a>
                     </div>
                 </div>
             </div>

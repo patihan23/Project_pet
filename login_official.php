@@ -34,7 +34,7 @@ include('config.php');
             </div>
             <div class="row gx-5 justify-content-center">
                 <div class="col-lg-8 col-xl-6">
-                    <form id="contactForm" method="post" action="login_db_official.php">
+                    <form id="contactForm" method="post" action="login_db_official">
                         <?php if (isset($_SESSION['error'])) : ?>
                             <div class="error">
                                 <h3>
@@ -58,6 +58,9 @@ include('config.php');
                         <!-- Submit Button-->
                         <div class="form-group">
                         <center><input type="submit" name="login_user" id="signin" class="form-submit1" value="Log in" /></center></div>
+                        <h1>
+                            User สำหรับทดสอบ <hr> Username Test Password 1234
+                        </h1>
                     </form>
                 </div>
             </div>

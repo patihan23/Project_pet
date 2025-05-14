@@ -83,5 +83,5 @@
 </nav>
 </div>
 
-<?php include('model/form_edit_Profile.php') ?>
-<?php include('action/action_edit_Profile.php') ?>
+<?php include('model/form_edit_profile.php') ?>
+<?php include('action/action_edit_profile.php') ?>
