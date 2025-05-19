@@ -58,9 +58,11 @@ include('config.php');
                         <!-- Submit Button-->
                         <div class="form-group">
                         <center><input type="submit" name="login_user" id="signin" class="form-submit1" value="Log in" /></center></div>
-                        <h1>
-                            User สำหรับทดสอบ <hr> Username Test Password 1234
-                        </h1>
+                        <div class="alert alert-info mt-4 text-center" role="alert">
+                            <strong>สำหรับทดสอบระบบ</strong><br>
+                            <span>Username: <b>Test</b></span><br>
+                            <span>Password: <b>1234</b></span>
+                        </div>
                     </form>
                 </div>
             </div>
