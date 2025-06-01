@@ -1,0 +1,67 @@
+# Environment files (CRITICAL - Never commit these!)
+.env
+.env.*
+!.env.example
+
+# Database files (contains sensitive data)
+*.sql
+*.dump
+*.backup
+Database/*.sql
+
+# Profile uploads (may contain personal photos)
+profile/
+profile/*
+!profile/.gitkeep
+
+# Logs (may contain sensitive information)
+*.log
+logs/
+logs/*
+
+# Temporary files
+*.tmp
+*.temp
+cache/
+tmp/
+temp/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Profile uploads (sensitive)
+profile/*.jpg
+profile/*.png
+profile/*.gif
+profile/*.jpeg
+
+# Assets that might contain sensitive data
+assets/private/
+
+# Configuration files with sensitive data
+config_local.php
+local_config.php
+
+# API keys and tokens (additional protection)
+*token*
+*secret*
+*key*
+
+# Session files
+sessions/
+
+# Upload directories
+uploads/
+files/

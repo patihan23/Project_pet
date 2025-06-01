@@ -6,30 +6,7 @@ if (!isset($_SESSION['username'])) {
   exit;
 }
 
-function sendLineNotify($message)
-{
-  $token = "0V6X2lx2DUEMyFrHjmttdHIybPcHJrWAjjHkIkUBKaL"; // ใส่ Token ของ LINE Notify ของคุณที่นี่
-  $apiUrl = "https://notify-api.line.me/api/notify";
-
-  $data = array('message' => $message);
-  $headers = array(
-    'Authorization: Bearer ' . $token,
-    'Content-Type: application/x-www-form-urlencoded'
-  );
-
-  $ch = curl_init();
-  curl_setopt($ch, CURLOPT_URL, $apiUrl);
-  curl_setopt($ch, CURLOPT_POST, true);
-  curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
-  curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-  $response = curl_exec($ch);
-  curl_close($ch);
-
-  // Optional: log response for debugging
-  // error_log($response);
-}
+// ฟังก์ชัน sendLineNotify ถูกย้ายไปยัง line_notify.php แล้ว
 
 function convertDateToThai($date)
 {

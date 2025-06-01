@@ -2,12 +2,6 @@
 
 A web-based pet management system for tracking pet information, vaccinations, and health records.
 
-## ⚠️ **IMPORTANT SECURITY NOTICE**
-- **NEVER commit your `.env` file with real credentials**
-- Always use `.env.example` as template
-- Database files in `Database/` folder are excluded from git
-- Profile photos are protected and not committed
-
 ## Quick Start
 
 1. **Setup Environment**

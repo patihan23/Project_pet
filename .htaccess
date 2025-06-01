@@ -20,6 +20,56 @@ RewriteRule ^(.*)\.php$ $1.php [L]
     Deny from all
 </Files>
 
+# Deny access to sensitive files
+<Files ".env">
+    Order Allow,Deny
+    Deny from all
+</Files>
+
+<Files ".env.example">
+    Order Allow,Deny
+    Deny from all
+</Files>
+
+<Files "DotEnv.php">
+    Order Allow,Deny
+    Deny from all
+</Files>
+
+<Files "helpers.php">
+    Order Allow,Deny
+    Deny from all
+</Files>
+
+# Deny access to log files
+<FilesMatch "\.(log|txt)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Deny access to backup files
+<FilesMatch "\.(sql|bak|backup)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Security headers
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options nosniff
+    Header always set X-Frame-Options DENY
+    Header always set X-XSS-Protection "1; mode=block"
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+    Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self';"
+</IfModule>
+
+# Disable server signature
+ServerSignature Off
+
+# Hide PHP version
+<IfModule mod_headers.c>
+    Header unset X-Powered-By
+</IfModule>
+
 # กำหนดค่า PHP
 php_value date.timezone Asia/Bangkok
 php_value display_errors Off
